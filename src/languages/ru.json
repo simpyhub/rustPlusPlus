@@ -45,6 +45,7 @@
     "bradleyRoamingAround": "Вероятно Танк сейчас патрулирует космодром.",
     "broadcaster": "Радиопередатчик",
     "buttonReconnecting": "ПЕРЕПОДКЛЮЧЕНИЕ",
+    "cams": "Cameras",
     "cameraGroupAlreadyExist": "Camera Group {group} already exist.",
     "cameraGroupDoesNotExist": "Camera Group {group} does not exist.",
     "cameraIdAddedSuccess": "Camera id {id} was successfully added to group {group}.",

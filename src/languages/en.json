@@ -45,6 +45,7 @@
     "bradleyRoamingAround": "Bradley APC is probably roaming around at Launch Site.",
     "broadcaster": "Broadcaster",
     "buttonReconnecting": "RECONNECTING",
+    "cams": "Cameras",
     "cameraGroupAlreadyExist": "Camera Group {group} already exist.",
     "cameraGroupDoesNotExist": "Camera Group {group} does not exist.",
     "cameraIdAddedSuccess": "Camera id {id} was successfully added to group {group}.",

@@ -45,6 +45,7 @@
     "bradleyRoamingAround": "Bradley APC streift wahrscheinlich beim Raketenstartplatz herum.",
     "broadcaster": "Funksender",
     "buttonReconnecting": "WIEDERVERBINDEN",
+    "cams": "Cameras",
     "cameraGroupAlreadyExist": "Kamera-Gruppe {group} existiert bereits.",
     "cameraGroupDoesNotExist": "Kamera-Gruppe {group} existiert nicht.",
     "cameraIdAddedSuccess": "Kamera-ID {id} wurde erfolgreich zur Gruppe {group} hinzugefügt.",

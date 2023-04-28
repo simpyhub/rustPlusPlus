@@ -17,6 +17,7 @@
     https://github.com/alexemanuelol/rustplusplus
 
 */
+require("dotenv").config();
 
 module.exports = {
     general: {

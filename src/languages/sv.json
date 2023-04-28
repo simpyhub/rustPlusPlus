@@ -45,6 +45,7 @@
     "bradleyRoamingAround": "Bradley APC strövar förmodlingen omkring på Uppskjutningsplatsen.",
     "broadcaster": "Sändare",
     "buttonReconnecting": "ÅTERANSLUTER",
+    "cams": "Cameras",
     "cameraGroupAlreadyExist": "Camera Group {group} already exist.",
     "cameraGroupDoesNotExist": "Camera Group {group} does not exist.",
     "cameraIdAddedSuccess": "Camera id {id} was successfully added to group {group}.",
