@@ -353,7 +353,8 @@ class MapMarkers {
                 /* PatrolHelicopter just got downed */
                 this.rustplus.sendEvent(
                     this.rustplus.notificationSettings.patrolHelicopterDestroyedSetting,
-                    this.client.intlGet(this.rustplus.guildId, 'patrolHelicopterTakenDown', { location: pos.string }));
+                    this.client.intlGet(this.rustplus.guildId, 'patrolHelicopterTakenDown', { location: pos.string }),
+                    Constants.COLOR_PATROL_HELICOPTER_TAKEN_DOWN);
 
                 this.timeSincePatrolHelicopterWasDestroyed = new Date();
                 this.timeSincePatrolHelicopterWasOnMap = new Date();
@@ -366,12 +367,14 @@ class MapMarkers {
                 if (this.rustplus.isFirstPoll) {
                     this.rustplus.sendEvent(
                         this.rustplus.notificationSettings.bradleyApcDestroyedSetting,
-                        this.client.intlGet(this.rustplus.guildId, 'bradleyOrHeliDestroyed', { location: posString }));
+                        this.client.intlGet(this.rustplus.guildId, 'bradleyOrHeliDestroyed', { location: posString }),
+                        Constants.COLOR_BRADLEY_OR_HELI_DESTROYED);
                 }
                 else {
                     this.rustplus.sendEvent(
                         this.rustplus.notificationSettings.bradleyApcDestroyedSetting,
-                        this.client.intlGet(this.rustplus.guildId, 'bradleyDestroyed', { location: posString }));
+                        this.client.intlGet(this.rustplus.guildId, 'bradleyDestroyed', { location: posString }),
+                        Constants.COLOR_BRADLEY_DESTROYED);
                 }
 
                 let instance = this.client.getInstance(this.rustplus.guildId);
@@ -424,7 +427,8 @@ class MapMarkers {
                 if (!this.knownVendingMachines.some(e => e.x === marker.x && e.y === marker.y)) {
                     this.rustplus.sendEvent(
                         this.rustplus.notificationSettings.vendingMachineDetectedSetting,
-                        this.client.intlGet(this.rustplus.guildId, 'newVendingMachine', { location: pos.string }));
+                        this.client.intlGet(this.rustplus.guildId, 'newVendingMachine', { location: pos.string }),
+                        Constants.COLOR_NEW_VENDING_MACHINE);
                 }
             }
 
@@ -481,9 +485,11 @@ class MapMarkers {
 
                         this.rustplus.sendEvent(
                             this.rustplus.notificationSettings.heavyScientistCalledSetting,
-                            this.client.intlGet(this.rustplus.guildId, 'heavyScientistsCalledSmall', {
-                                location: oilRigLocation.location
-                            }), this.rustplus.isFirstPoll, 'small_oil_rig_logo.png');
+                            this.client.intlGet(this.rustplus.guildId, 'heavyScientistsCalledSmall',
+                                { location: oilRigLocation.location }),
+                            Constants.COLOR_HEAVY_SCIENTISTS_CALLED_SMALL,
+                            this.rustplus.isFirstPoll,
+                            'small_oil_rig_logo.png');
 
                         let crateId = this.getOilRigCrateId(oilRig.x, oilRig.y, mapMarkers);
 
@@ -514,9 +520,11 @@ class MapMarkers {
 
                         this.rustplus.sendEvent(
                             this.rustplus.notificationSettings.heavyScientistCalledSetting,
-                            this.client.intlGet(this.rustplus.guildId, 'heavyScientistsCalledLarge', {
-                                location: oilRigLocation.location
-                            }), this.rustplus.isFirstPoll, 'large_oil_rig_logo.png');
+                            this.client.intlGet(this.rustplus.guildId, 'heavyScientistsCalledLarge',
+                                { location: oilRigLocation.location }),
+                            Constants.COLOR_HEAVY_SCIENTISTS_CALLED_LARGE,
+                            this.rustplus.isFirstPoll,
+                            'large_oil_rig_logo.png');
 
                         let crateId = this.getOilRigCrateId(oilRig.x, oilRig.y, mapMarkers);
 
@@ -544,12 +552,14 @@ class MapMarkers {
                 if (Map.isOutsideGridSystem(marker.x, marker.y, mapSize, offset)) {
                     this.rustplus.sendEvent(
                         this.rustplus.notificationSettings.chinook47DetectedSetting,
-                        this.client.intlGet(this.rustplus.guildId, 'chinook47EntersMap', { location: pos.string }));
+                        this.client.intlGet(this.rustplus.guildId, 'chinook47EntersMap', { location: pos.string }),
+                        Constants.COLOR_CHINOOK47_ENTERS_MAP);
                 }
                 else {
                     this.rustplus.sendEvent(
                         this.rustplus.notificationSettings.chinook47DetectedSetting,
-                        this.client.intlGet(this.rustplus.guildId, 'chinook47Located', { location: pos.string }));
+                        this.client.intlGet(this.rustplus.guildId, 'chinook47Located', { location: pos.string }),
+                        Constants.COLOR_CHINOOK47_LOCATED);
                 }
                 marker.ch47Type = 'crate';
             }
@@ -590,6 +600,8 @@ class MapMarkers {
             let mapSize = this.rustplus.info.correctedMapSize;
             let pos = Map.getPos(marker.x, marker.y, mapSize, this.rustplus);
 
+            this.rustplus.cargoShipTracers[marker.id] = [{ x: marker.x, y: marker.y }];
+
             marker.location = pos;
             marker.crates = [];
             marker.crateCounter = 1;
@@ -602,7 +614,8 @@ class MapMarkers {
             if (Map.isOutsideGridSystem(marker.x, marker.y, mapSize, offset)) {
                 this.rustplus.sendEvent(
                     this.rustplus.notificationSettings.cargoShipDetectedSetting,
-                    this.client.intlGet(this.rustplus.guildId, 'cargoShipEntersMap', { location: pos.string }));
+                    this.client.intlGet(this.rustplus.guildId, 'cargoShipEntersMap', { location: pos.string }),
+                    Constants.COLOR_CARGO_SHIP_ENTERS_MAP);
 
                 let instance = this.client.getInstance(this.rustplus.guildId);
                 this.cargoShipEgressTimers[marker.id] = new Timer.timer(
@@ -614,7 +627,8 @@ class MapMarkers {
             else {
                 this.rustplus.sendEvent(
                     this.rustplus.notificationSettings.cargoShipDetectedSetting,
-                    this.client.intlGet(this.rustplus.guildId, 'cargoShipLocated', { location: pos.string }));
+                    this.client.intlGet(this.rustplus.guildId, 'cargoShipLocated', { location: pos.string }),
+                    Constants.COLOR_CARGO_SHIP_LOCATED);
             }
 
             this.cargoShips.push(marker);
@@ -631,9 +645,8 @@ class MapMarkers {
 
             this.rustplus.sendEvent(
                 this.rustplus.notificationSettings.cargoShipLeftSetting,
-                this.client.intlGet(this.rustplus.guildId, 'cargoShipLeftMap', {
-                    location: marker.location.string
-                }));
+                this.client.intlGet(this.rustplus.guildId, 'cargoShipLeftMap', { location: marker.location.string }),
+                Constants.COLOR_CARGO_SHIP_LEFT_MAP);
 
             if (this.cargoShipEgressTimers[marker.id]) {
                 this.cargoShipEgressTimers[marker.id].stop();
@@ -643,6 +656,7 @@ class MapMarkers {
             this.timeSinceCargoShipWasOut = new Date();
 
             this.cargoShips = this.cargoShips.filter(e => e.id !== marker.id);
+            delete this.rustplus.cargoShipTracers[marker.id];
         }
 
         /* CargoShip markers that still remains. */
@@ -650,6 +664,8 @@ class MapMarkers {
             let mapSize = this.rustplus.info.correctedMapSize;
             let pos = Map.getPos(marker.x, marker.y, mapSize, this.rustplus);
             let cargoShip = this.getMarkerByTypeId(this.types.CargoShip, marker.id);
+
+            this.rustplus.cargoShipTracers[marker.id].push({ x: marker.x, y: marker.y });
 
             cargoShip.x = marker.x;
             cargoShip.y = marker.y;
@@ -696,6 +712,7 @@ class MapMarkers {
                         crateNumber: crates,
                         location: pos.string
                     }),
+                    Constants.COLOR_LOCKED_CRATE_SPAWN_CARGO,
                     this.rustplus.isFirstPoll);
             }
             else if (closestMonument.token === 'oil_rig_small' && distance <
@@ -710,6 +727,7 @@ class MapMarkers {
                             rig: oilRig,
                             location: pos.location
                         }),
+                        Constants.COLOR_LOCKED_CRATE_REFRESH_ON_SMALL,
                         this.rustplus.isFirstPoll,
                         'locked_crate_small_oil_rig_logo.png');
 
@@ -736,6 +754,7 @@ class MapMarkers {
                                     rig: oilRig,
                                     location: pos.location
                                 }),
+                                Constants.COLOR_LOCKED_CRATE_REFRESH_ON_SMALL,
                                 this.rustplus.isFirstPoll,
                                 'locked_crate_small_oil_rig_logo.png');
                             refreshed = true;
@@ -750,6 +769,7 @@ class MapMarkers {
                                 rig: oilRig,
                                 location: pos.location
                             }),
+                            Constants.COLOR_LOCKED_CRATE_RESPAWNED_ON_SMALL,
                             this.rustplus.isFirstPoll,
                             'locked_crate_small_oil_rig_logo.png');
                     }
@@ -769,6 +789,7 @@ class MapMarkers {
                             rig: oilRig,
                             location: pos.location
                         }),
+                        Constants.COLOR_LOCKED_CRATE_REFRESH_ON_LARGE,
                         this.rustplus.isFirstPoll,
                         'locked_crate_large_oil_rig_logo.png');
 
@@ -795,6 +816,7 @@ class MapMarkers {
                                     rig: oilRig,
                                     location: pos.location
                                 }),
+                                Constants.COLOR_LOCKED_CRATE_REFRESH_ON_LARGE,
                                 this.rustplus.isFirstPoll,
                                 'locked_crate_large_oil_rig_logo.png');
                             refreshed = true;
@@ -809,6 +831,7 @@ class MapMarkers {
                                 rig: oilRig,
                                 location: pos.location
                             }),
+                            Constants.COLOR_LOCKED_CRATE_RESPAWNED_ON_LARGE,
                             this.rustplus.isFirstPoll,
                             'locked_crate_large_oil_rig_logo.png');
                     }
@@ -824,14 +847,16 @@ class MapMarkers {
                             this.rustplus.notificationSettings.lockedCrateDroppedAtMonumentSetting,
                             this.client.intlGet(this.rustplus.guildId, 'lockedCrateDroppedAt', {
                                 location: pos.string
-                            }));
+                            }),
+                            Constants.COLOR_LOCKED_CRATE_DROPPED_AT);
                     }
                     else {
                         this.rustplus.sendEvent(
                             this.rustplus.notificationSettings.lockedCrateDroppedAtMonumentSetting,
                             this.client.intlGet(this.rustplus.guildId, 'lockedCrateLocatedAt', {
                                 location: pos.string
-                            }));
+                            }),
+                            Constants.COLOR_LOCKED_CRATE_DROPPED_AT);
                     }
 
                     marker.crateType = 'grid';
@@ -852,7 +877,8 @@ class MapMarkers {
                         this.rustplus.notificationSettings.lockedCrateDroppedAtMonumentSetting,
                         this.client.intlGet(this.rustplus.guildId, 'lockedCrateDroppedByChinook47', {
                             location: name
-                        }));
+                        }),
+                        Constants.COLOR_LOCKED_CRATE_DROPPED_BY_CHINOOK47);
 
                     let instance = this.client.getInstance(this.rustplus.guildId);
                     this.crateDespawnTimers[marker.id] = new Timer.timer(
@@ -872,7 +898,8 @@ class MapMarkers {
                         this.rustplus.notificationSettings.lockedCrateDroppedAtMonumentSetting,
                         this.client.intlGet(this.rustplus.guildId, 'lockedCrateLocatedAt', {
                             location: name
-                        }));
+                        }),
+                        Constants.COLOR_LOCKED_CRATE_DROPPED_AT);
                 }
 
                 marker.crateType = name;
@@ -898,14 +925,16 @@ class MapMarkers {
                     this.client.intlGet(this.rustplus.guildId, 'lockedCrateCargoShipLooted', {
                         crateNumber: `(${crateNumber}/3)`,
                         location: marker.location.string
-                    }));
+                    }),
+                    Constants.COLOR_LOCKED_CRATE_CARGO_SHIP_LOOTED);
             }
             else if (marker.crateType === 'grid') {
                 this.rustplus.sendEvent(
                     this.rustplus.notificationSettings.lockedCrateMonumentLeftSetting,
                     this.client.intlGet(this.rustplus.guildId, 'lockedCrateLootedOrDespawned', {
                         location: marker.location.string
-                    }));
+                    }),
+                    Constants.COLOR_LOCKED_CRATE_CARGO_SHIP_LOOTED_OR_DESPAWNED);
             }
             else if (marker.crateType === 'invalid') {
                 /* Invalid Locked Crate, we don't care */
@@ -922,6 +951,7 @@ class MapMarkers {
                         this.client.intlGet(this.rustplus.guildId, 'lockedCrateSmallLooted', {
                             location: marker.location.location
                         }),
+                        Constants.COLOR_LOCKED_CRATE_SMALL_LOOTED,
                         this.rustplus.isFirstPoll,
                         'locked_crate_small_oil_rig_logo.png');
                 }
@@ -970,6 +1000,7 @@ class MapMarkers {
                         this.client.intlGet(this.rustplus.guildId, 'lockedCrateLargeLooted', {
                             location: marker.location.location
                         }),
+                        Constants.COLOR_LOCKED_CRATE_LARGE_LOOTED,
                         this.rustplus.isFirstPoll,
                         'locked_crate_large_oil_rig_logo.png');
                 }
@@ -1023,14 +1054,16 @@ class MapMarkers {
                         this.rustplus.notificationSettings.lockedCrateMonumentLeftSetting,
                         this.client.intlGet(this.rustplus.guildId, 'lockedCrateLooted', {
                             location: marker.crateType
-                        }));
+                        }),
+                        Constants.COLOR_LOCKED_CRATE_LOOTED);
                 }
                 else {
                     this.rustplus.sendEvent(
                         this.rustplus.notificationSettings.lockedCrateMonumentLeftSetting,
                         this.client.intlGet(this.rustplus.guildId, 'lockedCrateDespawned', {
                             location: marker.crateType
-                        }));
+                        }),
+                        Constants.COLOR_LOCKED_CRATE_DESPAWNED);
                 }
 
                 if (this.crateDespawnTimers[marker.id]) {
@@ -1100,6 +1133,8 @@ class MapMarkers {
             let mapSize = this.rustplus.info.correctedMapSize;
             let pos = Map.getPos(marker.x, marker.y, mapSize, this.rustplus);
 
+            this.rustplus.patrolHelicopterTracers[marker.id] = [{ x: marker.x, y: marker.y }];
+
             marker.location = pos;
 
             /* Offset that is used to determine if PatrolHelicopter just spawned */
@@ -1111,14 +1146,16 @@ class MapMarkers {
                     this.rustplus.notificationSettings.patrolHelicopterDetectedSetting,
                     this.client.intlGet(this.rustplus.guildId, 'patrolHelicopterEntersMap', {
                         location: pos.string
-                    }));
+                    }),
+                    Constants.COLOR_PATROL_HELICOPTER_ENTERS_MAP);
             }
             else {
                 this.rustplus.sendEvent(
                     this.rustplus.notificationSettings.patrolHelicopterDetectedSetting,
                     this.client.intlGet(this.rustplus.guildId, 'patrolHelicopterLocatedAt', {
                         location: pos.string
-                    }));
+                    }),
+                    Constants.COLOR_PATROL_HELICOPTER_LOCATED_AT);
             }
 
             this.patrolHelicopters.push(marker);
@@ -1139,7 +1176,8 @@ class MapMarkers {
                     this.rustplus.notificationSettings.patrolHelicopterLeftSetting,
                     this.client.intlGet(this.rustplus.guildId, 'patrolHelicopterLeftMap', {
                         location: marker.location.string
-                    }));
+                    }),
+                    Constants.COLOR_PATROL_HELICOPTER_LEFT_MAP);
 
                 this.timeSincePatrolHelicopterWasOnMap = new Date();
             }
@@ -1160,6 +1198,7 @@ class MapMarkers {
             }
 
             this.patrolHelicopters = this.patrolHelicopters.filter(e => e.id !== marker.id);
+            delete this.rustplus.patrolHelicopterTracers[marker.id];
         }
 
         /* PatrolHelicopter markers that still remains. */
@@ -1167,6 +1206,8 @@ class MapMarkers {
             let mapSize = this.rustplus.info.correctedMapSize;
             let pos = Map.getPos(marker.x, marker.y, mapSize, this.rustplus);
             let patrolHelicopter = this.getMarkerByTypeId(this.types.PatrolHelicopter, marker.id);
+
+            this.rustplus.patrolHelicopterTracers[marker.id].push({ x: marker.x, y: marker.y });
 
             patrolHelicopter.x = marker.x;
             patrolHelicopter.y = marker.y;
@@ -1186,7 +1227,8 @@ class MapMarkers {
             this.rustplus.notificationSettings.cargoShipEgressSetting,
             this.client.intlGet(this.rustplus.guildId, 'cargoShipEntersEgressStage', {
                 location: marker.location.string
-            }));
+            }),
+            Constants.COLOR_CARGO_SHIP_ENTERS_EGRESS_STAGE);
 
         if (this.cargoShipEgressTimers[id]) {
             this.cargoShipEgressTimers[id].stop();
@@ -1205,6 +1247,7 @@ class MapMarkers {
             this.client.intlGet(this.rustplus.guildId, 'lockedCrateSmallOilRigUnlocked', {
                 location: oilRigLocation
             }),
+            Constants.COLOR_LOCKED_CRATE_SMALL_OILRIG_UNLOCKED,
             this.rustplus.isFirstPoll,
             'locked_crate_small_oil_rig_logo.png');
 
@@ -1223,6 +1266,7 @@ class MapMarkers {
             this.client.intlGet(this.rustplus.guildId, 'lockedCrateLargeOilRigUnlocked', {
                 location: oilRigLocation
             }),
+            Constants.COLOR_LOCKED_CRATE_LARGE_OILRIG_UNLOCKED,
             this.rustplus.isFirstPoll,
             'locked_crate_large_oil_rig_logo.png');
 
@@ -1236,7 +1280,8 @@ class MapMarkers {
         let explosionId = args[0];
         this.rustplus.sendEvent(
             this.rustplus.notificationSettings.bradleyApcShouldRespawnSetting,
-            this.client.intlGet(this.rustplus.guildId, 'bradleyApcRespawn'));
+            this.client.intlGet(this.rustplus.guildId, 'bradleyApcRespawn'),
+            Constants.COLOR_BRADLEY_APC_RESPAWN);
 
         if (this.bradleyAPCRespawnTimers[explosionId]) {
             this.bradleyAPCRespawnTimers[explosionId].stop();
@@ -1252,7 +1297,8 @@ class MapMarkers {
             this.client.intlGet(this.rustplus.guildId, 'lockedCrateDespawnsIn', {
                 location: name,
                 minutes: instance.serverList[this.rustplus.serverId].lockedCrateDespawnWarningTimeMs / (60 * 1000)
-            }));
+            }),
+            Constants.COLOR_LOCKED_CRATE_DESPAWNS_IN);
     }
 
     /* Help functions */

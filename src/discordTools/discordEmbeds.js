@@ -282,7 +282,8 @@ module.exports = {
         return module.exports.getEmbed({
             title: group.name,
             color: Constants.COLOR_DEFAULT,
-            thumbnail: 'attachment://smart_switch.png',
+            description: `**ID**: \`${groupId}\``,
+            thumbnail: `attachment://${group.image}`,
             footer: { text: `${instance.serverList[serverId].title}` },
             fields: [
                 {
@@ -535,14 +536,14 @@ module.exports = {
 
     },
 
-    getEventEmbed: function (guildId, serverId, text, image) {
+    getEventEmbed: function (guildId, serverId, text, image, color = Constants.COLOR_DEFAULT) {
         const instance = Client.client.getInstance(guildId);
         const server = instance.serverList[serverId];
         return module.exports.getEmbed({
-            color: Constants.COLOR_DEFAULT,
+            color: color,
             thumbnail: `attachment://${image}`,
             title: text,
-            footer: { text: server.title },
+            footer: { text: server.title, iconURL: server.img},
             timestamp: true
         });
     },
@@ -861,5 +862,37 @@ module.exports = {
             title: `${monument} CCTV ${Client.client.intlGet(guildId, 'codes')}`,
             description: code
         });
+    },
+
+    getCameraGroupShowEmbed: function (guildId, rustplus) {
+        const instance = InstanceUtils.readInstanceFile(guildId);
+
+        const embed = module.exports.getEmbed({
+            color: Constants.COLOR_DEFAULT,
+            title: Client.client.intlGet(guildId, 'customCameraGroups'),
+            footer: { text: instance.serverList[rustplus.serverId].title },
+        });
+
+        let empty = true;
+        for (const [group, cameras] of Object.entries(instance.serverList[rustplus.serverId].customCameraGroups)) {
+            empty = false;
+            let value = '';
+            if (cameras.length === 0) {
+                value = Client.client.intlGet(guildId, 'empty');
+            }
+            else {
+                for (const camera of cameras) {
+                    value += `${camera}\n`;
+                }
+            }
+
+            embed.addFields({ name: group, value: value, inline: true });
+        }
+
+        if (empty) {
+            embed.setDescription(Client.client.intlGet(guildId, 'empty'));
+        }
+
+        return embed;
     },
 }
